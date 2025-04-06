@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: AUTH_TYPE
+              value: {{ .Values.auth.type }}
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.auth.secretName }}
+                  key: {{ .Values.auth.usernameKey }}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.auth.secretName }}
+                  key: {{ .Values.auth.passwordKey }}
+            {{- if and .Values.ingress.enabled .Values.ingress.hostname }}
+            - name: SERVER_NAMES
+              value: {{ tpl .Values.ingress.hostname . }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/dav
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "common.fullname" .) }}            

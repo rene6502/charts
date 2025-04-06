@@ -1,0 +1,16 @@
+# sonarqube
+
+Helm chart for https://hub.docker.com/_/sonarqube
+
+## Install
+```bash
+helm upgrade sonarqube sonarqube --repo https://rene6502.github.io/charts \
+  --atomic --install --namespace default \
+  --set ingress.enabled=true \
+  --set ingress.hostname=sonarqube.example.com \
+  --set ingress.annotations."cert-manager\.io/cluster-issuer"=platform-issuer \
+  --set ingress.tls=true \
+  --set persistence.enabled=true
+```
+
+{{ template "chart.valuesSection" . }}

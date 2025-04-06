@@ -1,0 +1,13 @@
+# kube-vip
+
+Helm chart for https://github.com/kube-vip/kube-vip
+
+## Install
+```bash
+helm upgrade kube-vip kube-vip --repo https://rene6502.github.io/charts \
+  --atomic --install --namespace default \
+  --set env.vip_interface=ens18 \
+  --set config.range-global=172.16.1.64-172.16.1.79
+```
+
+{{ template "chart.valuesSection" . }}

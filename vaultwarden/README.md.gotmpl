@@ -1,0 +1,15 @@
+# vaultwarden
+
+Helm chart for https://github.com/BytemarkHosting/docker-vaultwarden
+
+## Install
+```bash
+helm upgrade vaultwarden vaultwarden --repo https://rene6502.github.io/charts \
+  --atomic --install --namespace default \
+  --set ingress.enabled=true \
+  --set ingress.hostname=vaultwarden.example.com \
+  --set ingress.annotations."cert-manager\.io/cluster-issuer"=platform-issuer \
+  --set ingress.tls=true
+```
+
+{{ template "chart.valuesSection" . }}

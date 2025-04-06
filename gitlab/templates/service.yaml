@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.fullname" . }}-web
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: web
+      port: {{ .Values.service.port }}
+      targetPort: 80
+  selector:
+    {{- include "common.selectorLabels" . | nindent 4 }}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.fullname" . }}-registry
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: registry
+      port: {{ .Values.registry.service.port }}
+      targetPort: 5001
+  selector:
+    {{- include "common.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,15 @@
+# httpbin
+
+Helm chart for https://github.com/mccutchen/go-httpbin
+
+## Install
+```bash
+helm upgrade httpbin httpbin --repo https://rene6502.github.io/charts \
+  --atomic --install --namespace default \
+  --set ingress.enabled=true \
+  --set ingress.hostname=httpbin.example.com \
+  --set ingress.annotations."cert-manager\.io/cluster-issuer"=platform-issuer \
+  --set ingress.tls=true
+```
+
+{{ template "chart.valuesSection" . }}

@@ -1,0 +1,63 @@
+name: build charts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        
+
+      - name: install helm
+        uses: azure/setup-helm@v4.3.0
+        id: install
+
+      - name: build
+        run: |
+          mkdir -p /tmp/build
+          for DIR in *; do
+            if [ -d "$DIR" ] && test -f "$DIR/Chart.yaml"; then
+              echo "helm lint $DIR"
+              helm dependency build ./$DIR
+              helm lint ./$DIR --quiet
+              helm package ./$DIR --destination /tmp/build
+            fi
+          done
+          helm repo index /tmp/build --url https://rene6502.github.io/charts
+
+      - name: reset branch gh-pages
+        run: |
+          git checkout gh-pages
+          git reset --hard main
+
+      - name: delete sources
+        run: |
+          declare -A KEEP_PATHS
+          KEEP_PATHS[".git"]=1
+          KEEP_PATHS[".gitignore"]=1
+          KEEP_PATHS[".github"]=1
+
+          for FILE in .* *; do
+            if [[ -z "${KEEP_PATHS["$FILE"]}" ]]; then
+              rm -rf "$FILE"
+            fi
+          done
+
+      - name: commit and push build
+        run: |
+          cp /tmp/build/* .
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git status
+          git commit -m "Build charts"
+          git push origin gh-pages --force
+
