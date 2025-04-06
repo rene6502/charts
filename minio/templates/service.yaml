@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.fullname" . }}
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: minio
+      port: {{ .Values.service.minioPort }}
+      targetPort: 9000
+      {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.http)) }}
+      nodePort: {{ .Values.service.nodePorts.minio }}
+      {{- end }}
+    - name: web
+      port: {{ .Values.service.webPort }}
+      targetPort: 9001
+      {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePorts.smtp)) }}
+      nodePort: {{ .Values.service.nodePorts.web }}
+      {{- end }}
+
+  selector:
+    {{- include "common.selectorLabels" . | nindent 4 }}

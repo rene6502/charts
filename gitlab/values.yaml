@@ -1,0 +1,57 @@
+image:
+  registry: docker.io
+  repository: gitlab/gitlab-ce
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# -- Registry secret names as an array
+imagePullSecrets: []
+
+# -- String to partially override common.fullname
+nameOverride: ""
+# -- String to fully override common.fullname
+fullnameOverride: ""
+# -- Override the namespace
+# @default -- `.Release.Namespace`
+namespaceOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  # -- Enable ingress record generation
+  enabled: false
+  className: ""
+  # -- Default host for the ingress record (evaluated as template)
+  hostname: gitlab.local
+  annotations: {}
+  # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+  tls: false
+  # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+  secretName: ""
+
+registry:
+  service:
+    type: ClusterIP
+    port: 5001
+
+  ingress:
+    # -- Enable ingress record generation
+    enabled: false
+    className: ""
+    # -- Default host for the ingress record (evaluated as template)
+    hostname: registry.local
+    annotations: {}
+    # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+    tls: false
+    # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+    secretName: ""
+
+persistence:
+  enabled: false
+  existingClaim: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  storageClass: ""

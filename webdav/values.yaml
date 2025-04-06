@@ -1,0 +1,45 @@
+image:
+  registry: docker.io
+  repository: bytemark/webdav
+  tag: 2.4
+  pullPolicy: IfNotPresent
+
+# -- Registry secret names as an array
+imagePullSecrets: []
+
+# -- String to partially override common.fullname
+nameOverride: ""
+# -- String to fully override common.fullname
+fullnameOverride: ""
+# -- Override the namespace
+# @default -- `.Release.Namespace`
+namespaceOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  # -- Enable ingress record generation
+  enabled: false
+  className: ""
+  # -- Default host for the ingress record (evaluated as template)
+  hostname: webdav.local
+  annotations: {}
+  # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+  tls: false
+  # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+  secretName: ""
+
+persistence:
+  existingClaim: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
+
+auth:
+  type: Basic
+  secretName: webdav
+  usernameKey: username
+  passwordKey: password

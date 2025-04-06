@@ -1,0 +1,79 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.fullname" . }}-web
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  {{- end }}
+  rules:
+  {{- if .Values.ingress.hostname }}
+    - host: {{ tpl .Values.ingress.hostname . }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "common.fullname" $ }}-web
+                port:
+                  number: {{ $.Values.service.port }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- if .Values.ingress.hostname }}
+    - hosts:
+        - {{ tpl .Values.ingress.hostname . }}
+      secretName: {{ .Values.ingress.secretName | default (printf "%s-tls" .Values.ingress.hostname) }}
+    {{- end }}
+  {{- end }}
+---  
+{{- end }}
+
+{{- if .Values.registry.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.fullname" . }}-registry
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  {{- with .Values.registry.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.registry.ingress.className }}
+  ingressClassName: {{ .Values.registry.ingress.className | quote }}
+  {{- end }}
+  rules:
+  {{- if .Values.registry.ingress.hostname }}
+    - host: {{ tpl .Values.registry.ingress.hostname . }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "common.fullname" $ }}-registry
+                port:
+                  number: {{ $.Values.registry.service.port }}
+  {{- end }}
+  {{- if .Values.registry.ingress.tls }}
+  tls:
+    {{- if .Values.registry.ingress.hostname }}
+    - hosts:
+        - {{ tpl .Values.registry.ingress.hostname . }}
+      secretName: {{ .Values.registry.ingress.secretName | default (printf "%s-tls" .Values.registry.ingress.hostname) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "common.fullname" . }}
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}      
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}        
+    spec:
+      containers:
+      - args:
+        - manager
+        env:
+        {{- with .Values.env }}
+          {{- range $key, $value := . }}
+          - name: {{ $key }}
+            value: {{  $value | quote}}
+          {{- end }}
+        {{- end }}
+        {{- with .Values.envValueFrom }}
+          {{- range $key, $value := . }}
+          - name: {{ $key }}
+            valueFrom:
+              {{- toYaml $value | nindent 14 }}
+          {{- end }}
+        {{- end }}
+        image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: kube-vip
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+      hostNetwork: true
+      serviceAccountName: kube-vip
+  updateStrategy: {}
+  

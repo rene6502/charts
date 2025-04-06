@@ -1,0 +1,19 @@
+{{- if .Values.pv.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}  
+spec:
+  capacity:
+    storage: {{ .Values.capacity }}
+  accessModes:
+    - {{ .Values.accessMode }}
+  persistentVolumeReclaimPolicy: {{ .Values.reclaimPolicy }}
+  storageClassName: {{ .Values.name }}
+  nfs:
+    server: {{ .Values.server }}
+    path: {{ .Values.path }}/{{ .Values.name }}
+{{- end }}

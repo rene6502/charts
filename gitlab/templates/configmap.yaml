@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "common.fullname" . }}-config
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+data:
+  gitlab-omnibus-config: |
+  {{- if and .Values.ingress.hostname .Values.registry.ingress.hostname }}
+      postgresql['shared_buffers'] = "512MB"
+      external_url 'https://{{ tpl .Values.ingress.hostname . }}'
+      nginx['listen_port'] = 80
+      nginx['listen_https'] = false
+      registry_nginx['ssl_certificate'] = "/etc/certs/fullchain.pem"
+      registry_nginx['ssl_certificate_key'] = "/etc/certs/privkey.pem"
+      gitlab_rails['packages_enabled'] = true
+      prometheus_monitoring['enable'] = false
+      registry_external_url 'https://{{ tpl .Values.registry.ingress.hostname . }}'
+      registry['enable'] = true
+      registry_nginx['listen_port'] = 5001
+      registry_nginx['listen_https'] = false
+      registry_nginx['proxy_set_headers'] = {
+        "Host" => "$http_host",
+        "X-Real-IP" => "$remote_addr",
+        "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
+        "X-Forwarded-Proto" => "https",
+        "X-Forwarded-Ssl" => "on"
+      }
+  {{- end }}

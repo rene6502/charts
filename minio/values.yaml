@@ -1,0 +1,49 @@
+image:
+  registry: docker.io
+  repository: minio/minio
+  # last version which supports legacy FS mode
+  tag: RELEASE.2022-10-24T18-35-07Z
+  pullPolicy: IfNotPresent
+
+# -- Registry secret names as an array
+imagePullSecrets: []
+
+# -- String to partially override common.fullname
+nameOverride: ""
+# -- String to fully override common.fullname
+fullnameOverride: ""
+# -- Override the namespace
+# @default -- `.Release.Namespace`
+namespaceOverride: ""
+
+auth:
+  secretName: minio
+  accessKey: access-key
+  secretKey: secret-key  
+
+service:
+  type: ClusterIP
+  minioPort: 9000
+  webPort: 9001
+  nodePorts:
+    minio: ""
+    web: ""
+
+persistence:
+  existingClaim: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
+
+ingress:
+  # -- Enable ingress record generation
+  enabled: false
+  className: ""
+  # -- Default host for the ingress record (evaluated as template)
+  hostname: minio.local
+  annotations: {}
+  # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+  tls: false
+  # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+  secretName: ""

@@ -1,0 +1,47 @@
+image:
+  registry: docker.io
+  repository: vaultwarden/server
+  tag: 1.33.2
+  pullPolicy: IfNotPresent
+
+# -- Registry secret names as an array
+imagePullSecrets: []
+
+# -- String to partially override common.fullname
+nameOverride: ""
+# -- String to fully override common.fullname
+fullnameOverride: ""
+# -- Override the namespace
+# @default -- `.Release.Namespace`
+namespaceOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  # -- Enable ingress record generation
+  enabled: false
+  className: ""
+  # -- Default host for the ingress record (evaluated as template)
+  hostname: vaultwarden.local
+  annotations: {}
+  # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+  tls: false
+  # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+  secretName: ""
+
+persistence:
+  existingClaim: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
+
+auth:
+  secretName: vaultwarden
+  tokenKey: password
+
+env:
+  SIGNUPS_ALLOWED: false
+  INVITATIONS_ALLOWED: false

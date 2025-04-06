@@ -1,0 +1,36 @@
+image:
+  registry: docker.io
+  repository: mailhog/mailhog
+  tag: v1.0.1
+  pullPolicy: IfNotPresent
+
+# -- Registry secret names as an array
+imagePullSecrets: []
+
+# -- String to partially override common.fullname
+nameOverride: ""
+# -- String to fully override common.fullname
+fullnameOverride: ""
+# -- Override the namespace
+# @default -- `.Release.Namespace`
+namespaceOverride: ""
+
+service:
+  type: ClusterIP
+  smtpPort: 1025
+  httpPort: 8025
+  nodePorts:
+    http: ""
+    smtp: ""
+
+ingress:
+  # -- Enable ingress record generation
+  enabled: false
+  className: ""
+  # -- Default host for the ingress record (evaluated as template)
+  hostname: mailhog.local
+  annotations: {}
+  # -- Enable TLS configuration for the host defined at ingress.hostname parameter
+  tls: false
+  # -- Optional custom TLS secret name. If not set, defaults to "<hostname>-tls".
+  secretName: ""

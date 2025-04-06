@@ -1,0 +1,10 @@
+name: default
+
+store:
+  name: vault-backend
+  kind: ClusterSecretStore
+  
+source:
+  key: ingress-tls
+  cert: cert
+  privkey: privkey

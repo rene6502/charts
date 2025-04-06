@@ -1,0 +1,14 @@
+
+name: default
+server: 172.16.1.2
+path: /share/data
+capacity: 10Gi
+accessMode: ReadWriteOnce
+reclaimPolicy: Retain
+
+sc:
+  enabled: true
+pv:
+  enabled: true
+pvc:
+  enabled: true

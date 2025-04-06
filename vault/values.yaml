@@ -1,0 +1,56 @@
+vault:
+  injector:
+    enabled: false
+
+  ui:
+    enabled: true
+
+  server:
+    enabled: true
+
+    dataStorage:
+      enabled: true
+
+    extraEnvironmentVars:
+      VAULT_LOG_LEVEL: trace
+
+    extraContainers:
+    - name: unseal
+      image: hashicorp/vault:1.19.0
+      env:
+        - name: VAULT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: vault-admin
+              key: username
+              optional: true
+        - name: VAULT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vault-admin
+              key: password
+              optional: true
+        - name: SCRIPT
+          value: &script |-
+            trap "echo SIGTERM received; exit" SIGTERM SIGINT
+            cp /scripts/* /tmp/ && chmod +x /tmp/*.sh
+            /tmp/unseal.sh
+            /tmp/create-userpass-auth.sh
+            if [ -f /tmp/create-eso-auth.sh ]; then
+              /tmp/create-eso-auth.sh
+            fi
+            echo "INFO: sleep infinity"
+            sleep infinity
+      command: ["/bin/sh", "-c", *script]
+      volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+        - name: data
+          mountPath: /vault/data
+    volumes:
+      - name: scripts
+        configMap:
+          name: vault-scripts
+
+eso:
+  enabled: false

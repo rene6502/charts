@@ -1,0 +1,12 @@
+# nfs-volume
+
+Helm chart for creating a PVC/PV connected to an NFS server
+
+## Install
+```bash
+helm upgrade nfs-volume nfs-volume --repo https://rene6502.github.io/charts \
+  --atomic --install --namespace default \
+  --set name=example
+```
+
+{{ template "chart.valuesSection" . }}

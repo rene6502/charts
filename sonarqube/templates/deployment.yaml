@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  namespace: {{ include "common.namespace" . | quote }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: chmod-volume-mounts
+          image: busybox:1.31
+          command:
+            - "sh"
+            - "-c"
+            - 'mkdir -p $(printf "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads extensions/plugins/tmp extensions/plugins certs) &&
+               chown 1000:1000 -R $(printf "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads extensions/plugins/tmp extensions/plugins certs)'
+          volumeMounts:
+            - mountPath: /opt/sonarqube/temp
+              name: storage
+              subPath: temp
+            - mountPath: /opt/sonarqube/logs
+              name: storage
+              subPath: logs
+            - mountPath: /opt/sonarqube/data
+              name: storage
+              subPath: data
+            - mountPath: /opt/sonarqube/extensions/plugins/tmp
+              name: storage
+              subPath: tmp
+            - mountPath: /opt/sonarqube/extensions/downloads
+              name: storage
+              subPath: downloads
+            - mountPath: /opt/sonarqube/extensions/plugins
+              name: storage
+              subPath: plugins
+        - name: init-sysctl
+          image: busybox:1.31
+          securityContext:
+            privileged: true
+          command:
+          - sysctl
+          - -w
+          - vm.max_map_count=262144
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - mountPath: /opt/sonarqube/data
+              name: storage
+              subPath: data
+            - mountPath: /opt/sonarqube/extensions/plugins/tmp
+              name: storage
+              subPath: tmp
+            - mountPath: /opt/sonarqube/extensions/downloads
+              name: storage
+              subPath: downloads
+            - mountPath: /opt/sonarqube/extensions/plugins
+              name: storage
+              subPath: plugins
+            - mountPath: /opt/sonarqube/temp
+              name: storage
+              subPath: temp
+            - mountPath: /opt/sonarqube/logs
+              name: storage
+              subPath: logs
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "common.fullname" .) }}
