@@ -1,0 +1,79 @@
+apiVersion: v1
+entries:
+  gitlab:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.193168931Z"
+    digest: 44c4ebf10800c489e1a1fafb4a57930f0879444a79ca0d1fe9d39e5beb340675
+    name: gitlab
+    urls:
+    - https://rene6502.github.io/charts/gitlab-1.0.0.tgz
+    version: 1.0.0
+  httpbin:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.19336691Z"
+    digest: e51d9da4b9f4c843ca38228a4aca3aa173b1c3e3821afbcdb9fef60d7b712f7c
+    name: httpbin
+    urls:
+    - https://rene6502.github.io/charts/httpbin-1.0.0.tgz
+    version: 1.0.0
+  kube-vip:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.19359316Z"
+    digest: 969219a01cf13f9bb3e1dbc67d67bfea3c7e3ec491aa3043f6d0bcd852c63cc0
+    name: kube-vip
+    urls:
+    - https://rene6502.github.io/charts/kube-vip-1.0.0.tgz
+    version: 1.0.0
+  mailhog:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.193823679Z"
+    digest: af08441658bd8433ca1ebb6e086e901faa73eed0091f8486a66ec8d8656b5768
+    name: mailhog
+    urls:
+    - https://rene6502.github.io/charts/mailhog-1.0.0.tgz
+    version: 1.0.0
+  minio:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.194062172Z"
+    digest: 2f49352888ee53d8e34dd4d0116c98e7bb72e5de4c6cdc751c59a6d68da0248a
+    name: minio
+    urls:
+    - https://rene6502.github.io/charts/minio-1.0.0.tgz
+    version: 1.0.0
+  sonarqube:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.194281841Z"
+    digest: 121afc7339f12c88461d96fd882fa55662f1086d5214d8b30a4e1b7384ec1a49
+    name: sonarqube
+    urls:
+    - https://rene6502.github.io/charts/sonarqube-1.0.0.tgz
+    version: 1.0.0
+  vault:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.197589762Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.30.0
+    digest: 680182fbe6f05d6385d13e169e62b3c11d7b1330ca65959c51d970f18e0bd61b
+    name: vault
+    urls:
+    - https://rene6502.github.io/charts/vault-1.0.0.tgz
+    version: 1.0.0
+  vaultwarden:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.198210273Z"
+    digest: fc398a6c8ac1e23dc648a92daab6e1d73dd8d0e8bfc7ace96e62867df00dc8be
+    name: vaultwarden
+    urls:
+    - https://rene6502.github.io/charts/vaultwarden-1.0.0.tgz
+    version: 1.0.0
+  webdav:
+  - apiVersion: v2
+    created: "2025-04-19T07:46:22.198455239Z"
+    digest: fbe8835949456c24b1d65f743d60b190e587f51c7289bb9119d6319507acdefe
+    name: webdav
+    urls:
+    - https://rene6502.github.io/charts/webdav-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-04-19T07:46:22.19275922Z"
