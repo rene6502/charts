@@ -2,23 +2,30 @@ apiVersion: v1
 entries:
   gitlab:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.778518817+01:00"
-    digest: b32c1f539fc450d23f5a7f7e66be8802880726b0346ec466d62384a7cff43690
+    created: "2026-01-01T20:08:02.412003256+01:00"
+    digest: 3543c647e8766cded5e07d7047373214192fa55d3d77c2d6b47816f27b6b4972
     name: gitlab
     urls:
     - https://rene6502.github.io/charts/gitlab-1.0.0.tgz
     version: 1.0.0
   httpbin:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.778779225+01:00"
-    digest: 31621fd6ec2699d1e84d9e98342a6b8f914fb3576bb8b8217172f8f9782c3230
+    created: "2026-01-01T20:08:02.412131666+01:00"
+    digest: f236410fd281bc331ff199ede2ebc159e05185d8edf79d8a2f92f4b0c16c7df3
     name: httpbin
     urls:
     - https://rene6502.github.io/charts/httpbin-1.0.0.tgz
     version: 1.0.0
   kube-vip:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779360558+01:00"
+    created: "2026-01-01T20:08:02.412389301+01:00"
+    digest: 74e761f8ed35324e5a6d59055ea68c89488f38c2de82d3abd7750228b70edced
+    name: kube-vip
+    urls:
+    - https://rene6502.github.io/charts/kube-vip-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    created: "2026-01-01T20:08:02.412266393+01:00"
     digest: 267079497bfc78c9378fe93c75d642d1291f67c184a06a4ed5660a7bf1641530
     name: kube-vip
     urls:
@@ -26,38 +33,38 @@ entries:
     version: 1.0.0
   mailhog:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779494102+01:00"
-    digest: 4a1701fc129c5317aac6b4062fc9990801ac13663fddbebf1a19e3888839909f
+    created: "2026-01-01T20:08:02.412517343+01:00"
+    digest: dc4fcda6262605fa9493d86e6b5f206276aecfa3a39ec15c2fb0b051bc05047f
     name: mailhog
     urls:
     - https://rene6502.github.io/charts/mailhog-1.0.0.tgz
     version: 1.0.0
   minio:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779630814+01:00"
-    digest: e9e10a1025e95a28e751da0b8b01cff7558c47fc59486a4fe1425fa7efc1b5d0
+    created: "2026-01-01T20:08:02.412645594+01:00"
+    digest: 395c03a41b257720591e44d0bbc8cfffec794142ee43ee65ab33a57940ebf211
     name: minio
     urls:
     - https://rene6502.github.io/charts/minio-1.0.0.tgz
     version: 1.0.0
   nfs-volume:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779720794+01:00"
-    digest: cace1c15d1b66db07e667d98b33ef44cccc6466349ca23461d4a9fa7c5e060b7
+    created: "2026-01-01T20:08:02.412728869+01:00"
+    digest: 6971becf3afb8ae72d59629b69b352d779ad758048ff5e7d211c1edc5375a579
     name: nfs-volume
     urls:
     - https://rene6502.github.io/charts/nfs-volume-1.0.0.tgz
     version: 1.0.0
   sonarqube:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779956822+01:00"
-    digest: d9d833366fe6a702bc1364b12e238a0bba73dc4e279f38c7c526626b61ce9fa1
+    created: "2026-01-01T20:08:02.413155426+01:00"
+    digest: fa5180faaedd607e0d64d241baa47b4d51c682af927b7aa92273ef70b4ffaf09
     name: sonarqube
     urls:
     - https://rene6502.github.io/charts/sonarqube-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.779840401+01:00"
+    created: "2026-01-01T20:08:02.413027039+01:00"
     digest: 16f3f7d441eedeb5f2b9d9c2b80b2ca8d5e26adc4264b4f5d1a21fcd79d2cf8b
     name: sonarqube
     urls:
@@ -65,26 +72,26 @@ entries:
     version: 1.0.0
   tls-secret:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.780028232+01:00"
-    digest: eb14b1fe0fa4bf07ab74bb23d228bd7ddfc6a2eea271a6b1369e8acfd7531df8
+    created: "2026-01-01T20:08:02.413222539+01:00"
+    digest: 437ed6b192c5c578cbba03710b54bc26d2687b694833e57a0426fd26cb33fa0a
     name: tls-secret
     urls:
     - https://rene6502.github.io/charts/tls-secret-1.0.0.tgz
     version: 1.0.0
   vault:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.783510804+01:00"
+    created: "2026-01-01T20:08:02.417300694+01:00"
     dependencies:
     - name: vault
       repository: https://helm.releases.hashicorp.com
       version: 0.31.0
-    digest: 69bf3f3bb0f12042e24ddec1534d7c4baeeab031f2ec46602d477ae15186718c
+    digest: 2e7a333676e842af358c87bd2fe3ec2add90a27e1a1a8fdbb1a2cfa4c496c9f4
     name: vault
     urls:
     - https://rene6502.github.io/charts/vault-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.781816488+01:00"
+    created: "2026-01-01T20:08:02.415538489+01:00"
     dependencies:
     - name: vault
       repository: https://helm.releases.hashicorp.com
@@ -96,14 +103,14 @@ entries:
     version: 1.0.0
   vaultwarden:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.783992976+01:00"
-    digest: 8b9c161d8fa9f6c685813925890bc3a6ec9db8fbfa8009bafe696cf41793100c
+    created: "2026-01-01T20:08:02.417744261+01:00"
+    digest: e9d38c2a9911ebef5dea98084d604e6bc153521649131e11155b2d778b840fd7
     name: vaultwarden
     urls:
     - https://rene6502.github.io/charts/vaultwarden-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.783644549+01:00"
+    created: "2026-01-01T20:08:02.417621269+01:00"
     digest: 7959b79a3a7ac57f8879afc1d32f4040c63a05392ab675f0afdd32e367de5af7
     name: vaultwarden
     urls:
@@ -111,10 +118,10 @@ entries:
     version: 1.0.0
   webdav:
   - apiVersion: v2
-    created: "2026-01-01T12:56:55.784457312+01:00"
-    digest: 0c1b8f6682135f048cc5f9a028eb3662f5ad59ea56cf20a7ff6231f6e1b11da4
+    created: "2026-01-01T20:08:02.417864788+01:00"
+    digest: 4f3150fd5e76a2da48ac5a830bcdcd2a5051e2ef9a1fe464e71dda15c81b40d0
     name: webdav
     urls:
     - https://rene6502.github.io/charts/webdav-1.0.0.tgz
     version: 1.0.0
-generated: "2026-01-01T12:56:55.778093943+01:00"
+generated: "2026-01-01T20:08:02.411711453+01:00"

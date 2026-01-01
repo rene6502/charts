@@ -3,6 +3,7 @@
 Helm chart for https://github.com/kube-vip/kube-vip
 
 ## Install
+
 ```bash
 helm upgrade kube-vip kube-vip --repo https://rene6502.github.io/charts \
   --atomic --install --namespace default \
