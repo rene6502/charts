@@ -2,7 +2,12 @@
 
 Helm chart for https://github.com/BytemarkHosting/docker-vaultwarden
 
+## Update
+
+Lookup version at https://hub.docker.com/u/vaultwarden
+
 ## Install
+
 ```bash
 helm upgrade vaultwarden vaultwarden --repo https://rene6502.github.io/charts \
   --atomic --install --namespace default \

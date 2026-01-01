@@ -1,7 +1,7 @@
 image:
   registry: docker.io
   repository: vaultwarden/server
-  tag: 1.33.2
+  tag: 1.35.1
   pullPolicy: IfNotPresent
 
 # -- Registry secret names as an array
